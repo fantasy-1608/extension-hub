@@ -1,6 +1,6 @@
 # Trung Anh - Chrome Extension Hub
 
-Trang Landing Page tĩnh giới thiệu và cung cấp liên kết cài đặt nhanh cho 2 Chrome Extension cá nhân của Trung Anh: **Điều dưỡng VNPT HIS** và **Aladinn**.
+Trang Landing Page tĩnh giới thiệu và cung cấp liên kết cài đặt nhanh cho 3 Chrome Extension cá nhân của Trung Anh: **Điều dưỡng VNPT HIS**, **Aladinn** và **Aladinn Oasis**.
 
 Trang web được thiết kế theo phong cách Glassmorphism hiện đại, hỗ trợ tự động chuyển đổi giao diện Sáng/Tối (Light/Dark mode) và tối ưu hóa trải nghiệm trên mọi thiết bị.
 
@@ -8,6 +8,7 @@ Trang web được thiết kế theo phong cách Glassmorphism hiện đại, h�
 
 1. **Điều dưỡng VNPT HIS**: Hỗ trợ nghiệp vụ điều dưỡng và tương tác y tế trên VNPT HIS.
 2. **Aladinn**: Tiện ích cá nhân tối ưu hóa trải nghiệm duyệt web.
+3. **Aladinn Oasis**: Tiện ích không gian làm việc và tối ưu hiệu suất công việc.
 
 ---
 
