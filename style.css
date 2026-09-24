@@ -25,9 +25,11 @@
   --border-subtle: light-dark(rgba(15, 23, 42, 0.08), rgba(241, 245, 249, 0.08));
   
   --accent-nurse: #06b6d4;
+  --accent-camsync: #10b981;
   --accent-aladinn: #f59e0b;
   --accent-oasis: #a855f7;
   --accent-nurse-glow: rgba(6, 182, 212, 0.15);
+  --accent-camsync-glow: rgba(16, 185, 129, 0.15);
   --accent-aladinn-glow: rgba(245, 158, 11, 0.15);
   --accent-oasis-glow: rgba(168, 85, 247, 0.15);
   
@@ -190,6 +192,10 @@ body {
   background: linear-gradient(90deg, #06b6d4, #22d3ee);
 }
 
+#card-camsync::before {
+  background: linear-gradient(90deg, #10b981, #34d399);
+}
+
 #card-aladinn::before {
   background: linear-gradient(90deg, #f59e0b, #fbbf24);
 }
@@ -209,6 +215,10 @@ body {
 
 #card-nurse:hover {
   box-shadow: 0 20px 40px -15px var(--accent-nurse-glow);
+}
+
+#card-camsync:hover {
+  box-shadow: 0 20px 40px -15px var(--accent-camsync-glow);
 }
 
 #card-aladinn:hover {
@@ -239,6 +249,11 @@ body {
 .nurse-color {
   background: linear-gradient(135deg, #0891b2, #22d3ee);
   box-shadow: 0 8px 20px -4px rgba(8, 145, 178, 0.3);
+}
+
+.camsync-color {
+  background: linear-gradient(135deg, #059669, #34d399);
+  box-shadow: 0 8px 20px -4px rgba(5, 150, 105, 0.3);
 }
 
 .aladinn-color {
@@ -272,18 +287,23 @@ body {
 }
 
 .nurse-badge {
-  background-color: rgba(6, 182, 212, 0.1);
-  color: #22d3ee;
+  background-color: light-dark(rgba(6, 182, 212, 0.12), rgba(6, 182, 212, 0.15));
+  color: light-dark(#0891b2, #22d3ee);
+}
+
+.camsync-badge {
+  background-color: light-dark(rgba(16, 185, 129, 0.12), rgba(16, 185, 129, 0.15));
+  color: light-dark(#059669, #34d399);
 }
 
 .aladinn-badge {
-  background-color: rgba(245, 158, 11, 0.1);
-  color: #fbbf24;
+  background-color: light-dark(rgba(245, 158, 11, 0.12), rgba(245, 158, 11, 0.15));
+  color: light-dark(#d97706, #fbbf24);
 }
 
 .oasis-badge {
-  background-color: rgba(168, 85, 247, 0.1);
-  color: #c084fc;
+  background-color: light-dark(rgba(168, 85, 247, 0.12), rgba(168, 85, 247, 0.15));
+  color: light-dark(#9333ea, #c084fc);
 }
 
 .card-desc {
