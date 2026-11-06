@@ -1,202 +1,571 @@
+<!-- Lucian UX/UI Prompt (#002, #008, #039, #044, #046, #050, #070, #076, #212, #213, #216, #219, #226, #243) · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/ -->
 <!DOCTYPE html>
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Trang lưu trữ và truy cập nhanh các tiện ích Chrome cá nhân của Trung Anh.">
-  <title>Trung Anh - Extension Hub</title>
-  
-  <!-- Google Fonts: Plus Jakarta Sans -->
+  <meta name="description" content="Kho tiện ích Chrome chính thức của Trung Anh: Điều dưỡng VNPT HIS, HIS CamSync và Aladinn.">
+  <title>Trung Anh — Extension Hub</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230F172A'/%3E%3Cg fill='none' stroke='%23F8FAFC' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='6' y='6' width='8' height='8' rx='2'/%3E%3Crect x='18' y='6' width='8' height='8' rx='2'/%3E%3Crect x='6' y='18' width='8' height='8' rx='2'/%3E%3Cpath d='M22 18v8M18 22h8' stroke='%2338BDF8'/%3E%3C/g%3E%3C/svg%3E">
+
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('eh_theme');
+        if (saved === 'dark' || saved === 'light') {
+          document.documentElement.setAttribute('data-theme', saved);
+        }
+      } catch (e) {
+        /* localStorage unavailable */
+      }
+    })();
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  
-  <!-- Custom Styles -->
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="ux">
 
-  <!-- Dynamic Glowing Background Orbs -->
-  <div class="bg-glow bg-glow-1"></div>
-  <div class="bg-glow bg-glow-2"></div>
+  <!-- #212 Pinned Top Header + #219 Theme Toggle -->
+  <header class="u212-hd" id="site-header">
+    <div class="u212-inner">
+      <a href="#top" class="u212-brand">
+        <span class="u212-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="8" height="8" rx="2"/>
+            <rect x="13" y="3" width="8" height="8" rx="2"/>
+            <rect x="3" y="13" width="8" height="8" rx="2"/>
+            <path d="M17 13v8M13 17h8"/>
+          </svg>
+        </span>
+        <span>Trung Anh <span class="u212-brand-sub">/ Extension Hub</span></span>
+      </a>
 
-  <div class="container">
-    <!-- Header -->
-    <header class="header">
-      <div class="logo">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="logo-icon">
-          <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/>
-          <path d="M12 6v6l4 2"/>
-        </svg>
+      <nav class="u212-nav" aria-label="Điều hướng trang">
+        <a href="#extensions" class="u212-link">Kho tiện ích</a>
+        <a href="#security" class="u212-link">Bảo mật</a>
+        <a href="#faq" class="u212-link">Hướng dẫn cài đặt</a>
+      </nav>
+
+      <div class="u212-actions">
+        <button type="button" class="cmd-trigger" id="open-cmd-btn" data-t="Mở bảng tìm kiếm nhanh" data-k="⌘K" aria-label="Tìm nhanh tiện ích">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="11" cy="11" r="6.5"/>
+            <path d="M16 16l4.5 4.5"/>
+          </svg>
+          <span>Tìm nhanh</span>
+          <kbd class="cmd-kbd" id="header-shortcut-kbd">⌘K</kbd>
+        </button>
+
+        <button type="button" class="u219-tg" id="theme-toggle" data-t="Đổi giao diện Sáng / Tối" aria-label="Đổi giao diện Sáng hoặc Tối">
+          <svg viewBox="0 0 18 18" id="theme-icon" aria-hidden="true"></svg>
+        </button>
       </div>
-      <h1 class="title">Extension Hub</h1>
-      <p class="subtitle">Kho tiện ích Chrome cá nhân và cổng cài đặt nhanh của Trung Anh.</p>
-    </header>
+    </div>
+    <span class="u212-pg" id="scroll-progress" aria-hidden="true"></span>
+  </header>
 
-    <!-- Main Grid -->
-    <main class="grid">
-      <!-- Card 1: Điều dưỡng VNPT HIS -->
-      <article class="card" id="card-nurse">
-        <div class="card-header">
-          <div class="card-icon nurse-color">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
-            </svg>
-          </div>
-          <div>
-            <h2 class="card-title">Điều dưỡng VNPT HIS</h2>
-            <span class="badge nurse-badge">Hỗ trợ Lâm sàng</span>
-          </div>
-        </div>
-        
-        <p class="card-desc">
-          Tối ưu hóa giao diện và tăng tốc xử lý các nghiệp vụ điều dưỡng, chăm sóc bệnh nhân trên hệ thống VNPT HIS.
-        </p>
+  <main id="top">
+    <!-- #226 Grid-Beam Canvas + #216 Staggered Split Hero -->
+    <section class="u226-hero u216-stage" id="hero-section">
+      <div class="u226-gd" aria-hidden="true"></div>
+      <div class="u226-gl" aria-hidden="true"></div>
+      <canvas class="u226-cv" id="hero-canvas" aria-hidden="true"></canvas>
 
-        <div class="qr-section">
-          <div class="qr-container">
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https%3A%2F%2Fchromewebstore.google.com%2Fdetail%2F%25C4%2591i%25E1%25BB%2581u-d%25C6%25B0%25E1%25BB%25A1ng-vnpt-his%2Fakcmgmclnmojmbpegjiifpoaiamdjilp%3Fauthuser%3D0%26hl%3Dvi%26pli%3D1&color=0f172a&bgcolor=f8fafc" 
-                 alt="QR Code Điều dưỡng VNPT HIS" class="qr-image" loading="lazy">
+      <div class="shell hero-grid">
+        <!-- Left Column: Strictly 4 Hero Elements -->
+        <div class="u216-copy">
+          <div class="u216-bd" data-s style="--d:80">
+            <i aria-hidden="true"></i>
+            <span>3 tiện ích chính thức trên Chrome Web Store</span>
           </div>
-          <span class="qr-hint">Quét mã để truy cập nhanh trên thiết bị khác</span>
-        </div>
 
-        <div class="card-actions">
-          <a href="https://chromewebstore.google.com/detail/điều-dưỡng-vnpt-his/akcmgmclnmojmbpegjiifpoaiamdjilp?authuser=0&hl=vi&pli=1" 
-             target="_blank" rel="noopener noreferrer" class="btn btn-primary">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="btn-icon">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-              <polyline points="7 10 12 15 17 10"/>
-              <line x1="12" y1="15" x2="12" y2="3"/>
-            </svg>
-            Cài đặt từ Web Store
-          </a>
-          <button class="btn btn-secondary btn-copy" data-url="https://chromewebstore.google.com/detail/điều-dưỡng-vnpt-his/akcmgmclnmojmbpegjiifpoaiamdjilp?authuser=0&hl=vi&pli=1">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="btn-icon copy-svg">
-              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-            </svg>
-            Sao chép liên kết
-          </button>
-        </div>
-      </article>
+          <h1 class="u216-h" id="hero-headline">
+            Tiện ích Chrome tinh gọn cho lâm sàng và công việc.
+          </h1>
 
-      <!-- Card 2: HIS CamSync -->
-      <article class="card" id="card-camsync">
-        <div class="card-header">
-          <div class="card-icon camsync-color">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/>
-              <circle cx="12" cy="13" r="3"/>
-            </svg>
-          </div>
-          <div>
-            <h2 class="card-title">HIS CamSync</h2>
-            <span class="badge camsync-badge">Chẩn đoán hình ảnh</span>
+          <p class="u216-p" data-s style="--d:460">
+            Cài đặt chính thức từ Chrome Web Store trên máy tính, hoặc sao chép liên kết gửi đồng nghiệp một chạm.
+          </p>
+
+          <div class="hero-ctas" data-s style="--d:580">
+            <!-- #002 Magnetic Arrow Button -->
+            <div class="u002" data-state="idle" id="hero-magnetic-wrap">
+              <div class="u002-mag">
+                <a href="#extensions" class="u002-btn" id="hero-primary-cta">
+                  <span class="u002-fill" aria-hidden="true"></span>
+                  <span class="u002-txt">
+                    <span>Xem kho tiện ích</span>
+                    <span aria-hidden="true">Đến danh sách ngay</span>
+                  </span>
+                  <span class="u002-orb" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+                  </span>
+                </a>
+              </div>
+            </div>
+
+            <button type="button" class="hero-btn-ghost" id="hero-cmd-btn" aria-label="Tìm nhanh tiện ích">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="11" cy="11" r="6.5"/>
+                <path d="M16 16l4.5 4.5"/>
+              </svg>
+              <span>Tìm nhanh</span>
+              <kbd class="cmd-kbd" id="hero-shortcut-kbd">⌘K</kbd>
+            </button>
           </div>
         </div>
-        
-        <p class="card-desc">
-          Đồng bộ ảnh chụp ECG giấy, kết quả siêu âm và nội soi trực tiếp từ điện thoại vào VNPT HIS qua WebRTC P2P bảo mật.
-        </p>
 
-        <div class="qr-section">
-          <div class="qr-container">
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https%3A%2F%2Fchromewebstore.google.com%2Fdetail%2Fhis-camsync-%C4%91%E1%BB%93ng-b%E1%BB%99-%E1%BA%A3nh-e%2Fmklhfnnomdpgjjnnknblaeihbnekibmd%3Fauthuser%3D0%26hl%3Dvi&color=0f172a&bgcolor=f8fafc" 
-                 alt="QR Code HIS CamSync" class="qr-image" loading="lazy">
+        <!-- Right Column: #213 Auto-Advancing Interactive Preview Deck -->
+        <div class="u216-deck" data-s style="--d:320">
+          <div class="u213" id="preview-deck">
+            <div class="u213-hd">
+              <b>Tổng quan hoạt động</b>
+              <span>Chạm để chuyển mục</span>
+            </div>
+
+            <div class="u213-tl" role="tablist" aria-label="Xem trước tiện ích">
+              <button type="button" class="u213-tb is-on" role="tab" aria-selected="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                </svg>
+                <span>Điều dưỡng HIS</span>
+                <i><b></b></i>
+              </button>
+
+              <button type="button" class="u213-tb" role="tab" aria-selected="false">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/>
+                  <circle cx="12" cy="13" r="3"/>
+                </svg>
+                <span>HIS CamSync</span>
+                <i><b></b></i>
+              </button>
+
+              <button type="button" class="u213-tb" role="tab" aria-selected="false">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                  <path d="M2 17l10 5 10-5"/>
+                  <path d="M2 12l10 5 10-5"/>
+                </svg>
+                <span>Aladinn</span>
+                <i><b></b></i>
+              </button>
+            </div>
+
+            <div class="u213-pv">
+              <!-- Panel 0: Điều dưỡng VNPT HIS -->
+              <div class="u213-pn is-on is-play" role="tabpanel">
+                <div class="u213-scene-top">
+                  <b>Nghiệp vụ điều dưỡng trên VNPT HIS</b>
+                  <span class="u213-tag">Lâm sàng</span>
+                </div>
+                <div class="scene-nurse-list">
+                  <div class="scene-nurse-item" style="transition-delay:0.06s">
+                    <span class="scene-nurse-dot"><svg viewBox="0 0 16 16"><path d="M3.5 8.5l3 3 6-6.5"/></svg></span>
+                    <div><b>Phiếu chăm sóc</b><small>Điền mẫu gọn, rõ ràng</small></div>
+                  </div>
+                  <div class="scene-nurse-item" style="transition-delay:0.14s">
+                    <span class="scene-nurse-dot"><svg viewBox="0 0 16 16"><path d="M3.5 8.5l3 3 6-6.5"/></svg></span>
+                    <div><b>Theo dõi sinh hiệu</b><small>Hiển thị trực quan</small></div>
+                  </div>
+                  <div class="scene-nurse-item" style="transition-delay:0.22s">
+                    <span class="scene-nurse-dot"><svg viewBox="0 0 16 16"><path d="M3.5 8.5l3 3 6-6.5"/></svg></span>
+                    <div><b>Kiểm đối hồ sơ</b><small>Giảm sót mục hành chính</small></div>
+                  </div>
+                  <div class="scene-nurse-item" style="transition-delay:0.30s">
+                    <span class="scene-nurse-dot"><svg viewBox="0 0 16 16"><path d="M3.5 8.5l3 3 6-6.5"/></svg></span>
+                    <div><b>Vận hành nhẹ</b><small>Ổn định suốt ca trực</small></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Panel 1: HIS CamSync -->
+              <div class="u213-pn" role="tabpanel" aria-hidden="true">
+                <div class="u213-scene-top">
+                  <b>Truyền ảnh cận lâm sàng tức thì</b>
+                  <span class="u213-tag">WebRTC P2P</span>
+                </div>
+                <div class="scene-p2p">
+                  <div class="scene-node">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="6" y="2" width="12" height="20" rx="2.5"/>
+                      <path d="M12 18h.01"/>
+                    </svg>
+                    <b>Điện thoại</b>
+                    <small>Chụp ECG, siêu âm</small>
+                  </div>
+
+                  <div class="scene-bridge">
+                    <div class="scene-track"><i></i></div>
+                    <span>P2P TRỰC TIẾP</span>
+                  </div>
+
+                  <div class="scene-node">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="2" y="3" width="20" height="14" rx="2"/>
+                      <path d="M8 21h8M12 17v4"/>
+                    </svg>
+                    <b>Máy trạm HIS</b>
+                    <small>Đính kèm ngay</small>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Panel 2: Aladinn -->
+              <div class="u213-pn" role="tabpanel" aria-hidden="true">
+                <div class="u213-scene-top">
+                  <b>Tăng tốc thao tác duyệt Chrome</b>
+                  <span class="u213-tag">Cá nhân</span>
+                </div>
+                <div class="scene-aladinn-kpi">
+                  <b>1 chạm</b>
+                  <span>Tiết kiệm thao tác lặp lại mỗi ngày</span>
+                </div>
+                <div class="u213-br" aria-hidden="true">
+                  <i style="--h:38%;transition-delay:0.05s"></i>
+                  <i style="--h:52%;transition-delay:0.10s"></i>
+                  <i style="--h:46%;transition-delay:0.15s"></i>
+                  <i style="--h:68%;transition-delay:0.20s"></i>
+                  <i style="--h:78%;transition-delay:0.25s"></i>
+                  <i style="--h:94%;transition-delay:0.30s"></i>
+                </div>
+              </div>
+            </div>
           </div>
-          <span class="qr-hint">Quét mã để truy cập nhanh trên thiết bị khác</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: Extension Directory (#039 Sliding Pill Tabs + #050 Spotlight Cards + #008 Copy) -->
+    <section class="section" id="extensions">
+      <div class="shell">
+        <div class="section-head">
+          <h2>Kho tiện ích Chrome</h2>
+          <p>Lọc theo nhóm nhu cầu, cài đặt trực tiếp từ Chrome Web Store lên máy tính hoặc sao chép liên kết gửi nhanh cho đồng nghiệp.</p>
         </div>
 
-        <div class="card-actions">
-          <a href="https://chromewebstore.google.com/detail/his-camsync-đồng-bộ-ảnh-e/mklhfnnomdpgjjnnknblaeihbnekibmd?authuser=0&hl=vi" 
-             target="_blank" rel="noopener noreferrer" class="btn btn-primary">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="btn-icon">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-              <polyline points="7 10 12 15 17 10"/>
-              <line x1="12" y1="15" x2="12" y2="3"/>
-            </svg>
-            Cài đặt từ Web Store
-          </a>
-          <button class="btn btn-secondary btn-copy" data-url="https://chromewebstore.google.com/detail/his-camsync-đồng-bộ-ảnh-e/mklhfnnomdpgjjnnknblaeihbnekibmd?authuser=0&hl=vi">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="btn-icon copy-svg">
-              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-            </svg>
-            Sao chép liên kết
-          </button>
-        </div>
-      </article>
-
-      <!-- Card 3: Aladinn -->
-      <article class="card" id="card-aladinn">
-        <div class="card-header">
-          <div class="card-icon aladinn-color">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 2L2 7l10 5 10-5-10-5z"/>
-              <path d="M2 17l10 5 10-5"/>
-              <path d="M2 12l10 5 10-5"/>
-            </svg>
+        <div class="directory-toolbar">
+          <div class="u039-tabs" id="filter-tabs" role="tablist" aria-label="Phân loại tiện ích">
+            <span class="u039-pill" id="filter-pill" aria-hidden="true"></span>
+            <button type="button" class="u039-tab" role="tab" aria-selected="true" data-filter="all">Tất cả (3)</button>
+            <button type="button" class="u039-tab" role="tab" aria-selected="false" data-filter="clinical">Y tế &amp; VNPT HIS (2)</button>
+            <button type="button" class="u039-tab" role="tab" aria-selected="false" data-filter="personal">Tiện ích cá nhân (1)</button>
           </div>
-          <div>
-            <h2 class="card-title">Aladinn</h2>
-            <span class="badge aladinn-badge">Tiện ích Tiện lợi</span>
+          <span class="directory-count" id="directory-count" aria-live="polite">Đang hiển thị 3 tiện ích</span>
+        </div>
+
+        <div class="ext-grid" id="ext-grid">
+          <!-- Card 1: Điều dưỡng VNPT HIS -->
+          <article class="u050" id="card-nurse" data-cat="clinical">
+            <div class="u050-card">
+              <span class="u050-glare" aria-hidden="true"></span>
+
+              <div class="ext-top">
+                <div class="ext-icon nurse" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                  </svg>
+                </div>
+                <div class="ext-meta">
+                  <h3>Điều dưỡng VNPT HIS</h3>
+                  <span class="ext-badge">Hỗ trợ Lâm sàng</span>
+                </div>
+              </div>
+
+              <p class="ext-desc">
+                Tối ưu bố cục hiển thị và rút ngắn thao tác xử lý phiếu chăm sóc, theo dõi người bệnh hàng ngày trên hệ thống VNPT HIS.
+              </p>
+
+              <div class="ext-tags">
+                <span>Phiếu chăm sóc</span>
+                <span>Thao tác nhanh</span>
+                <span>Chuẩn khoa phòng</span>
+              </div>
+
+              <div class="ext-compat">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+                <span>Máy tính · Chrome, Edge, Cốc Cốc</span>
+              </div>
+
+              <div class="ext-actions">
+                <a href="https://chromewebstore.google.com/detail/điều-dưỡng-vnpt-his/akcmgmclnmojmbpegjiifpoaiamdjilp?authuser=0&hl=vi&pli=1"
+                   target="_blank" rel="noopener noreferrer" class="btn-store">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7 10 12 15 17 10"/>
+                    <line x1="12" y1="15" x2="12" y2="3"/>
+                  </svg>
+                  <span>Cài đặt từ Web Store</span>
+                </a>
+
+                <button type="button" class="u008-btn btn-copy"
+                        data-name="Điều dưỡng VNPT HIS"
+                        data-t="Sao chép liên kết cài đặt"
+                        aria-label="Sao chép liên kết Điều dưỡng VNPT HIS"
+                        data-url="https://chromewebstore.google.com/detail/điều-dưỡng-vnpt-his/akcmgmclnmojmbpegjiifpoaiamdjilp?authuser=0&hl=vi&pli=1">
+                  <span class="u008-ic-wrap" aria-hidden="true">
+                    <svg class="u008-cp" viewBox="0 0 24 24"><rect x="8.5" y="8.5" width="11" height="11" rx="2.5"/><path d="M15.5 8.5V6.5a2 2 0 0 0-2-2h-7a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h2"/></svg>
+                    <svg class="u008-ok" viewBox="0 0 24 24"><path d="M5.5 12.5l4.2 4.2L18.5 8"/></svg>
+                  </span>
+                  <span class="u008-label">Sao chép</span>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 2: HIS CamSync -->
+          <article class="u050" id="card-camsync" data-cat="clinical">
+            <div class="u050-card">
+              <span class="u050-glare" aria-hidden="true"></span>
+
+              <div class="ext-top">
+                <div class="ext-icon camsync" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/>
+                    <circle cx="12" cy="13" r="3"/>
+                  </svg>
+                </div>
+                <div class="ext-meta">
+                  <h3>HIS CamSync</h3>
+                  <span class="ext-badge">Chẩn đoán hình ảnh</span>
+                </div>
+              </div>
+
+              <p class="ext-desc">
+                Đồng bộ ảnh chụp điện tim giấy (ECG), siêu âm và nội soi từ điện thoại vào thẳng biểu mẫu VNPT HIS qua kết nối ngang hàng P2P.
+              </p>
+
+              <div class="ext-tags">
+                <span>Ảnh ECG &amp; Siêu âm</span>
+                <span>Truyền thẳng P2P</span>
+                <span>Không qua trung gian</span>
+              </div>
+
+              <div class="ext-compat">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+                <span>Máy tính · Chrome, Edge, Cốc Cốc</span>
+              </div>
+
+              <div class="ext-actions">
+                <a href="https://chromewebstore.google.com/detail/his-camsync-đồng-bộ-ảnh-e/mklhfnnomdpgjjnnknblaeihbnekibmd?authuser=0&hl=vi"
+                   target="_blank" rel="noopener noreferrer" class="btn-store">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7 10 12 15 17 10"/>
+                    <line x1="12" y1="15" x2="12" y2="3"/>
+                  </svg>
+                  <span>Cài đặt từ Web Store</span>
+                </a>
+
+                <button type="button" class="u008-btn btn-copy"
+                        data-name="HIS CamSync"
+                        data-t="Sao chép liên kết cài đặt"
+                        aria-label="Sao chép liên kết HIS CamSync"
+                        data-url="https://chromewebstore.google.com/detail/his-camsync-đồng-bộ-ảnh-e/mklhfnnomdpgjjnnknblaeihbnekibmd?authuser=0&hl=vi">
+                  <span class="u008-ic-wrap" aria-hidden="true">
+                    <svg class="u008-cp" viewBox="0 0 24 24"><rect x="8.5" y="8.5" width="11" height="11" rx="2.5"/><path d="M15.5 8.5V6.5a2 2 0 0 0-2-2h-7a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h2"/></svg>
+                    <svg class="u008-ok" viewBox="0 0 24 24"><path d="M5.5 12.5l4.2 4.2L18.5 8"/></svg>
+                  </span>
+                  <span class="u008-label">Sao chép</span>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 3: Aladinn -->
+          <article class="u050" id="card-aladinn" data-cat="personal">
+            <div class="u050-card">
+              <span class="u050-glare" aria-hidden="true"></span>
+
+              <div class="ext-top">
+                <div class="ext-icon aladinn" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                    <path d="M2 17l10 5 10-5"/>
+                    <path d="M2 12l10 5 10-5"/>
+                  </svg>
+                </div>
+                <div class="ext-meta">
+                  <h3>Aladinn</h3>
+                  <span class="ext-badge">Tiện ích cá nhân</span>
+                </div>
+              </div>
+
+              <p class="ext-desc">
+                Tinh chỉnh trải nghiệm duyệt Chrome hàng ngày với hệ thống phím tắt nhanh, thao tác tiện lợi và giao diện gọn gàng.
+              </p>
+
+              <div class="ext-tags">
+                <span>Phím tắt thông minh</span>
+                <span>Tối ưu thẻ duyệt</span>
+                <span>Gọn nhẹ</span>
+              </div>
+
+              <div class="ext-compat">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+                <span>Máy tính · Chrome, Edge, Cốc Cốc</span>
+              </div>
+
+              <div class="ext-actions">
+                <a href="https://chromewebstore.google.com/detail/aladinn/koghdldeojlfbkcgehgdppjafbpklbei?authuser=0&hl=vi"
+                   target="_blank" rel="noopener noreferrer" class="btn-store">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7 10 12 15 17 10"/>
+                    <line x1="12" y1="15" x2="12" y2="3"/>
+                  </svg>
+                  <span>Cài đặt từ Web Store</span>
+                </a>
+
+                <button type="button" class="u008-btn btn-copy"
+                        data-name="Aladinn"
+                        data-t="Sao chép liên kết cài đặt"
+                        aria-label="Sao chép liên kết Aladinn"
+                        data-url="https://chromewebstore.google.com/detail/aladinn/koghdldeojlfbkcgehgdppjafbpklbei?authuser=0&hl=vi">
+                  <span class="u008-ic-wrap" aria-hidden="true">
+                    <svg class="u008-cp" viewBox="0 0 24 24"><rect x="8.5" y="8.5" width="11" height="11" rx="2.5"/><path d="M15.5 8.5V6.5a2 2 0 0 0-2-2h-7a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h2"/></svg>
+                    <svg class="u008-ok" viewBox="0 0 24 24"><path d="M5.5 12.5l4.2 4.2L18.5 8"/></svg>
+                  </span>
+                  <span class="u008-label">Sao chép</span>
+                </button>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: Asymmetric Split (#243 Tap-to-Verify Security + #044 Install Accordion) -->
+    <section class="section section-alt" id="security">
+      <div class="shell trust-split">
+        <!-- Left: #243 Tap-to-Verify Security Badges -->
+        <div class="u243" id="security-cards">
+          <div class="u243-hd">
+            <h2>An toàn dữ liệu &amp; bảo mật</h2>
+            <p>Bấm vào từng ô để lật xem cam kết bảo vệ quyền riêng tư và kiểm tra trạng thái.</p>
+          </div>
+          <div class="u243-gd" id="security-grid"></div>
+        </div>
+
+        <!-- Right: #044 FAQ Accordion -->
+        <div class="faq-wrap" id="faq">
+          <h2>Hướng dẫn cài đặt nhanh</h2>
+          <p>Giải đáp ngắn gọn các tình huống thường gặp khi cài tiện ích lên máy tính phòng khám hoặc máy cá nhân.</p>
+
+          <div class="u044" id="faq-accordion">
+            <div class="u044-it open">
+              <button class="u044-q" type="button" aria-expanded="true">
+                <span class="u044-n">01</span>
+                <span class="u044-t">Làm thế nào để cài tiện ích lên máy tính khoa phòng nhanh nhất?</span>
+                <span class="u044-pm" aria-hidden="true"></span>
+              </button>
+              <div class="u044-body" role="region">
+                <div>
+                  <div class="u044-a">
+                    <p>Mở trang này bằng trình duyệt Google Chrome (hoặc Microsoft Edge, Cốc Cốc), bấm nút "Cài đặt từ Web Store" ở tiện ích cần dùng rồi chọn "Thêm vào Chrome" là hoàn tất.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="u044-it">
+              <button class="u044-q" type="button" aria-expanded="false">
+                <span class="u044-n">02</span>
+                <span class="u044-t">Muốn gửi tiện ích cho đồng nghiệp ở máy tính khác thì làm thế nào?</span>
+                <span class="u044-pm" aria-hidden="true"></span>
+              </button>
+              <div class="u044-body" role="region">
+                <div>
+                  <div class="u044-a">
+                    <p>Bạn chỉ cần bấm nút "Sao chép" ở tiện ích cần chia sẻ rồi dán đường dẫn vào Zalo hoặc tin nhắn nội bộ. Đồng nghiệp mở liên kết đó trên máy tính làm việc và bấm "Thêm vào Chrome" là dùng được ngay.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="u044-it">
+              <button class="u044-q" type="button" aria-expanded="false">
+                <span class="u044-n">03</span>
+                <span class="u044-t">Tiện ích có lưu giữ hay gửi thông tin bệnh nhân ra ngoài không?</span>
+                <span class="u044-pm" aria-hidden="true"></span>
+              </button>
+              <div class="u044-body" role="region">
+                <div>
+                  <div class="u044-a">
+                    <p>Hoàn toàn không. Các tiện ích xử lý trực tiếp ngay trên trình duyệt máy trạm của bạn, không thu thập hay lưu trữ hồ sơ sức khỏe cá nhân (PHI) lên máy chủ trung gian.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="u044-it">
+              <button class="u044-q" type="button" aria-expanded="false">
+                <span class="u044-n">04</span>
+                <span class="u044-t">Khi có bản nâng cấp mới tôi có phải cài đặt lại thủ công không?</span>
+                <span class="u044-pm" aria-hidden="true"></span>
+              </button>
+              <div class="u044-body" role="region">
+                <div>
+                  <div class="u044-a">
+                    <p>Không cần. Mọi tiện ích cài từ Chrome Web Store chính thức sẽ được trình duyệt tự động kiểm tra và cập nhật lên phiên bản mới nhất khi khởi động máy.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        
-        <p class="card-desc">
-          Tối ưu hóa trải nghiệm duyệt Chrome với phím tắt nhanh, thao tác tiện lợi và tùy biến giao diện linh hoạt.
-        </p>
+      </div>
+    </section>
+  </main>
 
-        <div class="qr-section">
-          <div class="qr-container">
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https%3A%2F%2Fchromewebstore.google.com%2Fdetail%2Faladinn%2Fkoghdldeojlfbkcgehgdppjafbpklbei%3Fauthuser%3D0%26hl%3Dvi&color=0f172a&bgcolor=f8fafc" 
-                 alt="QR Code Aladinn" class="qr-image" loading="lazy">
-          </div>
-          <span class="qr-hint">Quét mã để truy cập nhanh trên thiết bị khác</span>
-        </div>
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="shell footer-inner">
+      <div class="footer-copy">
+        <strong>Cam kết bảo mật:</strong> Không thu thập thông tin cá nhân hoặc dữ liệu y tế nhạy cảm theo quy định Luật BVDLCN 2025. &copy; 2026 Trung Anh.
+      </div>
+      <div class="footer-links">
+        <a href="https://chromewebstore.google.com/detail/điều-dưỡng-vnpt-his/akcmgmclnmojmbpegjiifpoaiamdjilp?authuser=0&hl=vi&pli=1" target="_blank" rel="noopener noreferrer">Điều dưỡng HIS</a>
+        <a href="https://chromewebstore.google.com/detail/his-camsync-đồng-bộ-ảnh-e/mklhfnnomdpgjjnnknblaeihbnekibmd?authuser=0&hl=vi" target="_blank" rel="noopener noreferrer">HIS CamSync</a>
+        <a href="https://chromewebstore.google.com/detail/aladinn/koghdldeojlfbkcgehgdppjafbpklbei?authuser=0&hl=vi" target="_blank" rel="noopener noreferrer">Aladinn</a>
+      </div>
+    </div>
+  </footer>
 
-        <div class="card-actions">
-          <a href="https://chromewebstore.google.com/detail/aladinn/koghdldeojlfbkcgehgdppjafbpklbei?authuser=0&hl=vi" 
-             target="_blank" rel="noopener noreferrer" class="btn btn-primary">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="btn-icon">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-              <polyline points="7 10 12 15 17 10"/>
-              <line x1="12" y1="15" x2="12" y2="3"/>
-            </svg>
-            Cài đặt từ Web Store
-          </a>
-          <button class="btn btn-secondary btn-copy" data-url="https://chromewebstore.google.com/detail/aladinn/koghdldeojlfbkcgehgdppjafbpklbei?authuser=0&hl=vi">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="btn-icon copy-svg">
-              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-            </svg>
-            Sao chép liên kết
-          </button>
-        </div>
-      </article>
-
-    </main>
-
-    <!-- Footer -->
-    <footer class="footer">
-      <p class="privacy-note">
-        <strong>Cam kết bảo mật:</strong> Các tiện ích được liệt kê ở đây không thu thập thông tin cá nhân của người dùng hoặc dữ liệu y tế nhạy cảm (PHI) theo đúng quy định Luật BVDLCN 2025.
-      </p>
-      <p class="copyright">&copy; 2026 Trung Anh. Được host miễn phí trên Vercel.</p>
-    </footer>
+  <!-- #046 Command Palette Modal -->
+  <div class="cmd-backdrop" id="cmd-modal" role="dialog" aria-modal="true" aria-label="Bảng tìm kiếm và lệnh nhanh" aria-hidden="true">
+    <div class="u046-pal">
+      <label class="u046-field">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>
+        <input class="u046-in" id="cmd-input" type="text" role="combobox" aria-expanded="false" aria-controls="cmd-list" aria-autocomplete="list" autocomplete="off" spellcheck="false" placeholder="Tìm tiện ích, mở Web Store hoặc sao chép liên kết..." aria-label="Nhập từ khóa tìm kiếm">
+        <kbd class="cmd-kbd">ESC</kbd>
+      </label>
+      <div class="u046-body" id="cmd-body">
+        <span class="u046-hl" id="cmd-hl" aria-hidden="true"></span>
+        <ul class="u046-list" id="cmd-list" role="listbox" aria-label="Danh sách thao tác"></ul>
+      </div>
+      <div class="u046-foot" aria-hidden="true">
+        <span><kbd class="cmd-kbd">↑↓</kbd> Di chuyển</span>
+        <span><kbd class="cmd-kbd">↵</kbd> Thực hiện</span>
+        <span><kbd class="cmd-kbd">ESC</kbd> Đóng</span>
+      </div>
+    </div>
   </div>
 
-  <!-- Toast Notification -->
-  <div id="toast" class="toast" role="alert" aria-live="assertive">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="toast-icon">
-      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-      <polyline points="22 4 12 14.01 9 11.01"/>
-    </svg>
-    <span>Đã sao chép liên kết thành công!</span>
+  <!-- #070 Stacking Toasts -->
+  <div class="u070-zone" id="toast-zone" role="region" aria-label="Thông báo">
+    <div class="sr-only" id="toast-live" aria-live="polite"></div>
   </div>
 
-  <!-- Script -->
+  <!-- #076 Gliding Tooltip (300ms delay / 0ms instant dismiss) -->
+  <div class="u076-tip" id="global-tooltip" role="tooltip">
+    <div class="u076-box"><span></span><kbd></kbd></div>
+  </div>
+
   <script src="script.js"></script>
 </body>
 </html>
